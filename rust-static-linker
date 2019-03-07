@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Use original linker for the build scripts and shared libaries.
+if [[ "$@" == *"build_script"* ]] || [[ "$@" == *"-shared"* ]]; then
+    echo "EXEC" >> /host/log.txt
+    exec cc $@
+fi
+
+# For other targets force static linking.
+ARGS=""
+while test $# -gt 0
+do
+    if [[ "$1" == "-lgcc_s" ]] || [[ "$1" == "-Wl,-Bdynamic" ]]; then
+        shift
+        continue
+    fi
+
+    ARGS="$ARGS $1"
+    shift
+done
+
+ARGS="$ARGS -static -lgcc -lgcc_eh"
+exec cc $ARGS
