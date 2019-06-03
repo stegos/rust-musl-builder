@@ -4,7 +4,7 @@ FROM alpine:3.9
 RUN apk --no-cache add gcc
 FROM voidlinux/voidlinux-musl
 
-RUN xbps-install -S -y bash vim gcc make clang flex bison git file curl gmp-devel mpfr-devel rust-1.34.0_1 cargo
+RUN xbps-install -S -y bash vim gcc make clang flex bison git file curl gmp-devel mpfr-devel rust-1.35.0_1 cargo
 
 # HACK: copy static version of libgcc from Alpine Linix
 COPY --from=0 /usr/lib/gcc/x86_64-alpine-linux-musl/8.3.0/libgcc.a /usr/local/lib
